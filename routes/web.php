@@ -24,7 +24,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    
+    Route::prefix('post')->group(function () {
+        Route::get('/', [PostController::class, 'index'])->name('post.index');
+        Route::post('/', [PostController::class, 'store'])->name('post.store');
+        Route::get('/{id}', [PostController::class, 'show'])->name('post.show');
+        Route::put('/{id}', [PostController::class, 'update'])->name('post.update');
+        Route::delete('/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+    });
     
     Route::prefix('comment')->group(function () {
         Route::get('/', [CommentController::class, 'index'])->name('comment.index');
@@ -35,11 +42,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::prefix('post')->group(function () {
-    Route::get('/', [PostController::class, 'index'])->name('post.index');
-    Route::post('/', [PostController::class, 'store'])->name('post.store');
-    Route::get('/{id}', [PostController::class, 'show'])->name('post.show');
-    Route::put('/{id}', [PostController::class, 'update'])->name('post.update');
-    Route::delete('/{id}', [PostController::class, 'destroy'])->name('post.destroy');
-});
 require __DIR__.'/auth.php';
